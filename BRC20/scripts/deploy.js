@@ -7,13 +7,14 @@
 const hre = require("hardhat");
 
 async function main() {
+  const [deployer] = await hre.ethers.getSigners();
+  console.log('Deploying contracts with the account:', deployer.address);
 
-  const OrangeCoin = await hre.ethers.deployContract("OrangeCoin");
-
-  await OrangeCoin.waitForDeployment();
+  const OrangeCoin = await hre.ethers.getContractFactory("OrangeCoin");
+  const orng = await OrangeCoin.deploy();
 
   console.log(
-    `Orange Coin deployed to ${OrangeCoin.target}`
+    `Orange Coin deployed to ${orng.target}`
   );
 }
 
